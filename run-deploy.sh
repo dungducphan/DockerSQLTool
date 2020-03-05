@@ -6,4 +6,4 @@ if [[ -z "$IP" ]]; then
 fi
 xhost + $IP
 
-docker run --rm -it -e DISPLAY=$IP:0 -v `pwd`:`pwd` dungphan90/sqlviewer:latest
+docker run --rm -it -e DISPLAY=$IP:0 --mount type=bind,src=`pwd`/data,dst=/home/user/sql dungphan90/sqlviewer:latest
