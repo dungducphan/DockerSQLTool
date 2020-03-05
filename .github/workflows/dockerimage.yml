@@ -9,11 +9,16 @@ on:
 jobs:
 
   build:
-
+    name: Build and Push to DockerHub
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build and Push the Docker image
-      run: source build.sh
-      # run: docker build . --file Dockerfile --tag dungphan90/sqlviewer:latest
+    - name: Build the Docker image 
+      run: docker build . --file Dockerfile --tag dungphan90/sqlviewer:latest
+    - name: Push the Docker image to DockerHub
+      run: |
+        docker login -u dungphan90 -p "${GITHUB_PACKAGE_REGISTRY_TOKEN}"
+        docker push dungphan90/sqlviewer:latest
+      env:
+        GITHUB_PACKAGE_REGISTRY_TOKEN: ${{ secrets.GITHUB_PACKAGE_REGISTRY_TOKEN }}
